@@ -1,6 +1,7 @@
 import pygame
 from model.Game import GameModel
 
+
 class KeyboardController:
 
     def __init__(self, game: GameModel):

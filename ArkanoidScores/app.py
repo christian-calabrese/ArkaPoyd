@@ -11,8 +11,10 @@ app = Chalice(app_name='ArkanoidScores')
 def get_highest():
     response = client.query(
         TableName = 'ArkanoidScores',
+        KeyConditionExpression = 'score',
         Limit = 1,
-        ScanIndexForward = False
+        ScanIndexForward = False,
+
     )
     json_resp = json.dumps(response.get("Items"))
     return json_resp
@@ -20,17 +22,17 @@ def get_highest():
 @app.route('/score', methods=['POST'])
 def push_score():
     parsed = json.loads(app.current_request._body)
-
+    placeholder = "XXX"
     client.put_item(
         TableName='ArkanoidScores',
         Item={
             'score':
             {
-                'S': parsed.get('score'),
+                'N': str(parsed.get('score'))
             },
-            'name':
+            'nome':
             {
-                'S': 'XXX',
+                'S': placeholder
             }
         }
     )
