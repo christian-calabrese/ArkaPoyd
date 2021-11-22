@@ -1,10 +1,11 @@
-import Settings
-from model.Brick import Brick
-from model.Status import Status
-from model.Bar import Bar
-from model.Bullet import Bullet
-from typing import List
 import math
+from typing import List
+
+import Settings
+from model.Bar import Bar
+from model.Brick import Brick
+from model.Bullet import Bullet
+from model.Status import Status
 
 
 class GameModel:
@@ -39,20 +40,19 @@ class GameModel:
         if self.__bullet.move():
             # Check if the bullet hits the bar
             if rect_circ_collide(
-                self.__bar.xpos, self.__bar.ypos,
-                self.__bar.width, self.__bar.height,
-                self.__bullet.pos[0], self.__bullet.pos[1],
-                self.__bullet.radius
+                    self.__bar.xpos, self.__bar.ypos,
+                    self.__bar.width, self.__bar.height,
+                    self.__bullet.pos[0], self.__bullet.pos[1],
+                    self.__bullet.radius
             ):
                 self.__bullet.hit(self.__bar.xpos, self.__bar.ypos, True)
             # Check if any of the bricks is hit by the bullet
             for brick in self.__bricks:
-                if brick.active and
-                rect_circ_collide(
-                    brick.xpos, brick.ypos,
-                    brick.width, brick.height,
-                    self.__bullet.pos[0], self.__bullet.pos[1],
-                    self.__bullet.radius
+                if brick.active and rect_circ_collide(
+                        brick.xpos, brick.ypos,
+                        brick.width, brick.height,
+                        self.__bullet.pos[0], self.__bullet.pos[1],
+                        self.__bullet.radius
                 ):
                     self.__bullet.hit(brick.xpos, brick.ypos, False)
                     self.__score += 1

@@ -1,8 +1,9 @@
-from typing import Dict
-from model.Brick import Brick
-from random import choice
 import math
+from random import choice
+from typing import Dict
+
 import Settings
+from model.Brick import Brick
 
 
 class Bullet:
@@ -24,15 +25,15 @@ class Bullet:
         else:
             self.__velocity["y"] *= mulvely
 
-    def move(self) -> bool: # Return None if the bullet touches the ground, return current position otherwise
+    def move(self) -> bool:  # Return None if the bullet touches the ground, return current position otherwise
         # Hit right/left border
-        if (self.__pos["x"] + self.__radius) + self.__velocity["x"] >= Settings.WIDTH or
-        (self.__pos["x"] - self.__radius) + self.__velocity["x"] <= 0:
+        if (self.__pos["x"] + self.__radius) + self.__velocity["x"] >= Settings.WIDTH or \
+                (self.__pos["x"] - self.__radius) + self.__velocity["x"] <= 0:
             self.__velocity["x"] *= -1  # Invert x velocity
         if (self.__pos["y"] - self.__radius <= 0):  # Hit the top border
             self.__velocity["y"] *= -1  # Invert y velocity
 
-        if(self.__pos["y"] + self.__radius >= Settings.HEIGHT):
+        if (self.__pos["y"] + self.__radius >= Settings.HEIGHT):
             return None
         self.__pos["x"] += self.__velocity["x"]
         self.__pos["y"] += self.__velocity["y"]

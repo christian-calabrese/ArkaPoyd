@@ -1,9 +1,11 @@
 import sys
+
 import pygame
+
+import Settings
 from controller.Keyboard import KeyboardController
 from model.Game import GameModel
 from view.GameView import GameView
-import Settings
 
 
 def main():
@@ -31,6 +33,7 @@ def main():
 
     # Push scores to a DynamoDB through AWS Lambda
     # leaderboard.push(model.score)
+
 
 if __name__ == "__main__":
     main()

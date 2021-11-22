@@ -1,5 +1,6 @@
-from typing import Dict, Tuple
 from random import randrange
+from typing import Dict, Tuple
+
 import Settings
 
 

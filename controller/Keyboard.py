@@ -1,4 +1,5 @@
 import pygame
+
 from model.Game import GameModel
 
 
@@ -23,8 +24,8 @@ class KeyboardController:
                 elif event.key == pygame.K_ESCAPE:
                     running = pygame.quit()
                 elif event.key == pygame.K_SPACE and self.__counter == 0:
-                        self.__counter = 1
-                        self.game_model.bullet.first_bump()
+                    self.__counter = 1
+                    self.game_model.bullet.first_bump()
                 break
 
         return running

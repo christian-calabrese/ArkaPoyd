@@ -1,6 +1,8 @@
-import pygame
-import Settings
 from random import randrange
+
+import pygame
+
+import Settings
 
 
 class GameView:
@@ -20,14 +22,14 @@ class GameView:
             self.__real_bricks.append(pygame.Rect(
                 brick.xpos, brick.ypos,
                 brick.width, Settings.BRICK_HEIGHT
-                )
+            )
             )
 
     def draw(self):
         # Refresh the screen
         self.__screen.fill(Settings.BG_COLOR)
 
-        if(not self.__model.bullet.is_moving()):
+        if (not self.__model.bullet.is_moving()):
             start_text = self.__start_font.render(
                 "Press the space bar to start", True, (255, 0, 0)
             )
@@ -48,5 +50,5 @@ class GameView:
         for i in range(len(self.__model.bricks)):  # Draw rects
             brick = self.__model.bricks[i]
             real_brick = self.__real_bricks[i]
-            if(brick.active):
+            if (brick.active):
                 pygame.draw.rect(self.__screen, brick.color, real_brick, 1)

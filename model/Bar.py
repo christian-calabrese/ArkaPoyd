@@ -1,5 +1,6 @@
-import Settings
 from typing import Dict
+
+import Settings
 
 
 class Bar():
@@ -11,9 +12,9 @@ class Bar():
 
     def move(self) -> int:
         increment = self.__xdir * 3
-        if(
-            (self.__pos["x"] - (self.__width / 2)) + increment > 0 and
-            (self.__pos["x"] + (self.__width / 2)) + increment < Settings.WIDTH
+        if (
+                (self.__pos["x"] - (self.__width / 2)) + increment > 0 and
+                (self.__pos["x"] + (self.__width / 2)) + increment < Settings.WIDTH
         ):
             self.__pos["x"] = self.__pos["x"] + increment
             return increment
@@ -26,7 +27,6 @@ class Bar():
     @xdir.setter
     def xdir(self, dir):
         self.__xdir = dir
-
 
     @property
     def xpos(self) -> int:
