@@ -2,3 +2,4 @@
 .vscode
 .idea
 .mypy_cache
+*cache*
