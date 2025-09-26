@@ -49,7 +49,7 @@ jobs:
       - name: Validate artifact attestation
         run: |
           # Esegui qui la validazione come desideri
-          gh attestation verify ${{ env.ARTIFACT_PATH }} --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
+          gh attestation verify ${{ env.ARTIFACT_PATH }} --owner christian-calabrese --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
         env:
           ARTIFACT_PATH: ${{ needs.build-and-attest.outputs.artifact-url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
