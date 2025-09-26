@@ -1,0 +1,44 @@
+name: Artifact Attestation Example
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-attest:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create artifact file
+        run: echo "Hello, Arkanoid!" > artifact.txt
+
+      - name: Generate artifact attestation (build provenance)
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: 'artifact.txt'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: example-artifact
+          path: artifact.txt
+
+      - name: Download artifact attestation
+        uses: actions/download-artifact@v4
+        with:
+          name: example-artifact.attestation
+          path: attestation
+
+      - name: Print attestation fields
+        run: |
+          echo "Attestation raw (base64):"
+          cat attestation/example-artifact.intoto.jsonl | jq -r '.dsseEnvelope.payload' | head -c 100
+          echo "\n--- Decoded attestation fields ---"
+          base64 -d <<< $(cat attestation/example-artifact.intoto.jsonl | jq -r '.dsseEnvelope.payload') > attestation/payload.json
+          jq '.' attestation/payload.json
