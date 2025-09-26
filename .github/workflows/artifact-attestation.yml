@@ -3,7 +3,7 @@ name: Artifact Attestation Example
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-attest:
