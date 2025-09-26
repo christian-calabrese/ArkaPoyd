@@ -1,10 +1,7 @@
 name: Artifact Attestation Example
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ master ]
-
+  workflow_call:
 jobs:
   build-and-attest:
     runs-on: ubuntu-latest
@@ -24,6 +21,7 @@ jobs:
         with:
           subject-path: 'artifact.txt'
           subject-name: 'krical'
+          show-summary: false
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -32,16 +30,10 @@ jobs:
           path: artifact.txt
 
       - name: Print attestation fields
+        env: 
+          WORKFLOW_NAME: ${{ github.workflow }}
+          WORKFLOW_REF: ${{ github.workflow_ref }}
         run: |
-          echo "Attestation raw (base64):"
-          cat attestation/example-artifact.intoto.jsonl | jq -r '.dsseEnvelope.payload' | head -c 100
-          echo "\n--- Decoded attestation fields ---"
-          base64 -d <<< $(cat attestation/example-artifact.intoto.jsonl | jq -r '.dsseEnvelope.payload') > attestation/payload.json
-          jq '.' attestation/payload.json
+          echo "GITHUB.WORKFLOW: $WORKFLOW_NAME"
+          echo "GITHUB.WORKFLOW_REF: $WORKFLOW_REF"
 
-      - name: Install GitHub CLI
-        run: sudo apt-get update && sudo apt-get install -y gh jq
-
-      - name: Verify artifact attestation
-        run: |
-          gh attestation verify artifact.txt --repo ${{ github.repository }} --format json | jq .

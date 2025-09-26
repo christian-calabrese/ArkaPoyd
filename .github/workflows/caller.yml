@@ -1,0 +1,8 @@
+name: Call Artifact Attestation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-artifact-attestation:
+    uses: christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml@master
