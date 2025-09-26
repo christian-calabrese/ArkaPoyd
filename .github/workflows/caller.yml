@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-fake-artifact:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create a fake artifact file
-        run: echo "This is a fake artifact." > artifact.txt
-      - name: Upload fake artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: example-artifact
-          path: artifact.txt
+  # create-fake-artifact:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Create a fake artifact file
+  #       run: echo "This is a fake artifact." > artifact.txt
+  #     - name: Upload fake artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: example-artifact
+  #         path: artifact.txt
   call-artifact-attestation:
     uses: christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml@master
   call-artifact-attestation2:
