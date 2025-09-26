@@ -90,7 +90,10 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Validate artifact attestation
         run: |
-          gh attestation verify ${{ env.ARTIFACT_PATH }} --owner christian-calabrese --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
+          gh attestation verify "$ARTIFACT_PATH" \
+            --repo "$REPOSITORY" \
+            --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
         env:
           ARTIFACT_PATH: "./artifact.txt"
+          REPOSITORY: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
