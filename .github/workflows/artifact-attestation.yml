@@ -52,8 +52,8 @@ jobs:
           name: example-artifact
       - name: Validate artifact attestation
         run: |
-          # Esegui qui la validazione come desideri
-          gh attestation verify ${{ env.ARTIFACT_PATH }} --owner christian-calabrese --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
+          ATTESTATION_OUTPUT=$(gh attestation verify ${{ env.ARTIFACT_PATH }} --owner christian-calabrese --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml --format=json)
+          echo "ATTESTATION_OUTPUT: $ATTESTATION_OUTPUT"
         env:
           ARTIFACT_PATH: "./artifact.txt"
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
