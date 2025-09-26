@@ -2,6 +2,7 @@ name: Artifact Attestation Example
 
 on:
   workflow_call:
+
 jobs:
   build-and-attest:
     runs-on: ubuntu-latest
@@ -9,6 +10,8 @@ jobs:
       id-token: write
       contents: read
       attestations: write
+    outputs:
+      artifact-url: ${{ steps.upload.outputs.artifact-url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,13 +27,14 @@ jobs:
           show-summary: false
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-artifact@v4
         with:
           name: example-artifact
           path: artifact.txt
 
       - name: Print attestation fields
-        env: 
+        env:
           WORKFLOW_NAME: ${{ github.workflow }}
           WORKFLOW_REF: ${{ github.workflow_ref }}
         run: |
@@ -38,4 +42,16 @@ jobs:
           echo "GITHUB.WORKFLOW_REF: $WORKFLOW_REF"
           echo '${{ toJson(github) }}'
 
-
+  validate:
+    needs: build-and-attest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate artifact attestation
+        run: |
+          # Esegui qui la validazione come desideri
+          gh attestation verify ${{ env.ARTIFACT_PATH }} --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
+        env:
+          ARTIFACT_PATH: ${{ needs.build-and-attest.outputs.artifact-url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SUBJECT_NAME: 'dx'
+          EXPECTED_JOB: ${{ github.job }}
