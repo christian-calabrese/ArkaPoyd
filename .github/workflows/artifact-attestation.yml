@@ -36,4 +36,6 @@ jobs:
         run: |
           echo "GITHUB.WORKFLOW: $WORKFLOW_NAME"
           echo "GITHUB.WORKFLOW_REF: $WORKFLOW_REF"
+          echo '${{ toJson(github) }}'
+
 
