@@ -40,14 +40,6 @@ jobs:
         if: ${{ steps.check-artifact.outputs.exists != 'true' }}
         run: echo "Hello, Arkanoid!" > artifact.txt
 
-      - name: Generate artifact attestation (build provenance)
-        if: ${{ steps.check-artifact.outputs.exists != 'true' }}
-        uses: actions/attest-build-provenance@v3
-        with:
-          subject-path: 'artifact.txt'
-          subject-name: 'krical'
-          show-summary: false
-
       - name: Upload artifact
         if: ${{ steps.check-artifact.outputs.exists != 'true' }}
         id: upload
@@ -55,6 +47,14 @@ jobs:
         with:
           name: ${{ env.BUNDLE_NAME }}
           path: artifact.txt
+
+      - name: Generate artifact attestation (build provenance)
+        if: ${{ steps.check-artifact.outputs.exists != 'true' }}
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: 'artifact.txt'
+          subject-name: 'krical'
+          show-summary: false
 
   validate:
     needs: build-and-attest
