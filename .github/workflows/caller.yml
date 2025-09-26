@@ -6,3 +6,6 @@ on:
 jobs:
   call-artifact-attestation:
     uses: christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml@master
+  call-artifact-attestation2:
+    needs: call-artifact-attestation
+    uses: christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml@master
