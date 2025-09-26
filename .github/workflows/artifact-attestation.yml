@@ -46,12 +46,16 @@ jobs:
     needs: build-and-attest
     runs-on: ubuntu-latest
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: example-artifact
       - name: Validate artifact attestation
         run: |
           # Esegui qui la validazione come desideri
           gh attestation verify ${{ env.ARTIFACT_PATH }} --owner christian-calabrese --signer-workflow christian-calabrese/ArkaPoyd/.github/workflows/artifact-attestation.yml
         env:
-          ARTIFACT_PATH: ${{ needs.build-and-attest.outputs.artifact-url }}
+          ARTIFACT_PATH: "./artifact.txt"
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SUBJECT_NAME: 'dx'
           EXPECTED_JOB: ${{ github.job }}
