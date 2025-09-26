@@ -1,6 +1,7 @@
 name: Artifact Attestation Example
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -42,3 +43,10 @@ jobs:
           echo "\n--- Decoded attestation fields ---"
           base64 -d <<< $(cat attestation/example-artifact.intoto.jsonl | jq -r '.dsseEnvelope.payload') > attestation/payload.json
           jq '.' attestation/payload.json
+
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install -y gh jq
+
+      - name: Verify artifact attestation
+        run: |
+          gh attestation verify artifact.txt --repo ${{ github.repository }} --format json | jq .
