@@ -23,18 +23,13 @@ jobs:
         uses: actions/attest-build-provenance@v3
         with:
           subject-path: 'artifact.txt'
+          subject-name: 'krical'
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: example-artifact
           path: artifact.txt
-
-      - name: Download artifact attestation
-        uses: actions/download-artifact@v4
-        with:
-          name: example-artifact.attestation
-          path: attestation
 
       - name: Print attestation fields
         run: |
